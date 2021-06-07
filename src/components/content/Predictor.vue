@@ -10,20 +10,14 @@
       <div class="p-5 divide-y divide-yellow-600 text-2xl">
         <select name="cars" id="cars" class="block w-full outline-none">
           <option value="" disabled selected>From</option>
-          <option value="volvo">Volvo</option>
-          <option value="saab">Saab</option>
-          <option value="mercedes">Mercedes</option>
-          <option value="audi">Audi</option>
+          <option v-for="station in stations" :key="station" value='station'>{{station}}</option>
         </select>
 
         <!-- <hr class="mt-2 mb-2 white text-white"/> -->
 
         <select name="cars" id="cars" class="block w-full outline-none">
           <option value="" disabled selected>To</option>
-          <option value="volvo">Volvo</option>
-          <option value="saab">Saab</option>
-          <option value="mercedes">Mercedes</option>
-          <option value="audi">Audi</option>
+          <option v-for="station in stations" :key="station" value='station'>{{station}}</option>
         </select>
       </div>
 
@@ -42,7 +36,7 @@
 
       <!-- Predict Button -->
       <div class="text-center mt-5 mb-5">
-        <button class="bg-yellow-600 rounded-md text-white p-2 text-2xl w-5/6 shadow-lg">Make Prediction</button>
+        <button class="bg-yellow-600 rounded-md text-white p-2 text-2xl w-5/6 shadow-lg hover:bg-gray-700 hover:text-yellow-600 hover:shadow-none ease-in duration-200 focus:outline-none">Make Prediction</button>
       </div>
   </div>  
 </template>
@@ -51,6 +45,11 @@
 export default {
   name: 'Predictor',
   props: {
-  }
+  },
+  data() {
+    return {
+      stations: ['Groningen', 'Den Haag', 'Amsterdam', 'Utrecht', 'Eindhoven'],
+    }
+  }, 
 }
 </script>
