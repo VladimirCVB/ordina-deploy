@@ -1,6 +1,6 @@
 <template>
   <div>
-      <Description class="float-left" />
+      <Description />
       <Predictor />
   </div>  
 </template>
