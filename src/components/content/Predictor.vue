@@ -8,14 +8,14 @@
 
       <!-- Content 'From' and 'To'   -->
       <div class="p-5 divide-y divide-yellow-600 text-2xl">
-        <select name="cars" id="cars" class="block w-full outline-none">
+        <select name="cars" id="cars" class="block w-full outline-none cursor-pointer">
           <option value="" disabled selected>From</option>
           <option v-for="station in stations" :key="station" value='station'>{{station}}</option>
         </select>
 
         <!-- <hr class="mt-2 mb-2 white text-white"/> -->
 
-        <select name="cars" id="cars" class="block w-full outline-none">
+        <select name="cars" id="cars" class="block w-full outline-none cursor-pointer">
           <option value="" disabled selected>To</option>
           <option v-for="station in stations" :key="station" value='station'>{{station}}</option>
         </select>
