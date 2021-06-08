@@ -1,5 +1,5 @@
 <template>
-  <div class="w-1/3 m-10 ml-20 inline-block">
+  <div class="">
       <img src="../../../public/Train image.jpg" height="350" width="855" class="rounded-xl mb-5 shadow-lg"/>
       <div class="bg-yellow-600 p-10 pt-5 shadow-xl rounded-xl">
           <h2 class="text-white font-bold text-center mb-5 text-xl">Ordina Delay Predictor</h2>

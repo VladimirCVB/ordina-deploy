@@ -1,5 +1,5 @@
 <template>
-  <div class="border-2 border-yellow-600 rounded-lg inline-block w-1/3 ml-24">
+  <div class="border-2 border-yellow-600 rounded-lg">
       <!-- Predictor Title -->
       <div class="text-white text-center text-2xl bg-yellow-600 shadow-lg">
         <i class="fas fa-history mr-2 text-lg"></i>
@@ -35,7 +35,7 @@
       </div>
 
       <!-- Predict Button -->
-      <div class="text-center mt-5 mb-5">
+      <div class="text-center mb-5">
         <button class="bg-yellow-600 rounded-md text-white p-2 text-2xl w-5/6 shadow-lg hover:bg-gray-700 hover:text-yellow-600 hover:shadow-none ease-in duration-200 focus:outline-none">Make Prediction</button>
       </div>
   </div>  
