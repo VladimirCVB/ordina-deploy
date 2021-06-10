@@ -8,16 +8,16 @@
 
       <!-- Content 'From' and 'To'   -->
       <div class="p-5 divide-y divide-yellow-600 text-2xl">
-        <select name="cars" id="cars" class="block w-full outline-none cursor-pointer">
+        <select v-model="form.fromStation" name="fromStation" class="block w-full outline-none cursor-pointer">
           <option value="" disabled selected>From</option>
-          <option v-for="station in stations" :key="station" value='station'>{{station}}</option>
+          <option v-for="(station, index) in stationCodes" :key="station" v-bind:value="station">{{stations[index]}}</option>
         </select>
 
         <!-- <hr class="mt-2 mb-2 white text-white"/> -->
 
-        <select name="cars" id="cars" class="block w-full outline-none cursor-pointer">
+        <select v-model="form.toStation" name="toStation" class="block w-full outline-none cursor-pointer">
           <option value="" disabled selected>To</option>
-          <option v-for="station in stations" :key="station" value='station'>{{station}}</option>
+          <option v-for="(station, index) in stationCodes" :key="station" v-bind:value="station">{{stations[index]}}</option>
         </select>
       </div>
 
@@ -28,28 +28,100 @@
       </div>
       
       <!-- Date Content -->
-      <div class="mt-5 mb-64 p-2 divide-y divide-yellow-500">
-        <input type="date" placeholder="Date" class="w-full outline-none text-xl" />
+      <div class="mt-5 mb-10 p-2 divide-y divide-yellow-500">
+        <input v-model="inputTime" type="date" placeholder="Date" class="w-full outline-none text-xl" />
         <hr />
+      </div>
 
+      <!-- Results Title -->
+      <div class="bg-yellow-600 text-white text-center text-2xl shadow-lg">
+        <i class="fas fa-business-time mr-2 text-lg"></i>
+        <label>Results</label>
+      </div>
+
+      <!-- Results Content -->
+      <div class="mt-5 mb-10 p-2 text-xl">
+        <label v-if="result">The model predicted that the delay will be in the following category: {{result.data}}.</label>
+        <p class="mt-5">Our predictions consist of three types.</p>
+        <ul class="pl-5">
+          <li>0 - there is no delay</li>
+          <li>1- there is a delay of less than 5 minutes</li>
+          <li>2 - there is a delay of more than 5 minutes</li>
+        </ul>
+      </div>
+
+      <!-- Errors -->
+      <div class="text-red-700" v-if="errors.length">
+        <div class="bg-red-600 text-white text-center text-2xl shadow-lg">
+          <i class="fas fa-exclamation-circle mr-2"></i>
+          <label>Errors Occurred</label>
+        </div>
+        <div class="p-5 font-bold">
+          <p v-for="error in errors" :key="error">{{error}}</p>
+        </div>  
       </div>
 
       <!-- Predict Button -->
       <div class="text-center mb-5">
-        <button class="bg-yellow-600 rounded-md text-white p-2 text-2xl w-5/6 shadow-lg hover:bg-gray-700 hover:text-yellow-600 hover:shadow-none ease-in duration-200 focus:outline-none">Make Prediction</button>
+        <button v-on:click="checkForm" class="bg-yellow-600 rounded-md text-white p-2 text-2xl w-5/6 shadow-lg hover:bg-gray-700 hover:text-yellow-600 hover:shadow-none ease-in duration-200 focus:outline-none">Make A Prediction</button>
       </div>
   </div>  
 </template>
 
 <script>
+import axios from "axios"
+import moment from 'moment'
+
 export default {
   name: 'Predictor',
   props: {
   },
   data() {
     return {
-      stations: ['Groningen', 'Den Haag', 'Amsterdam', 'Utrecht', 'Eindhoven'],
+      stations: ['Groningen', 'Den Haag', 'Amsterdam', 'Utrecht', 'Eindhoven', 'Rotterdam'],
+      stationCodes: ['GN', 'GVC', 'ASD', 'UT', 'EHV', 'RTD'],
+      inputTime: '',
+      form : {
+        fromStation: '',
+        toStation: '',
+        time: ''
+      },
+      result: '',
+      errors: []
     }
-  }, 
+  },
+  methods:{
+    checkForm: function (e) {
+
+      this.errors = [];
+
+      if (!this.form.fromStation) {
+        this.errors.push('Departure station required!');
+        return;
+      }
+      if (!this.form.toStation) {
+        this.errors.push('Arrival station required!');
+        return;
+      }
+
+      if (!this.inputTime) {
+        this.errors.push('Date required!');
+        return;
+      }
+
+      if (this.form.fromStation == this.form.toStation) {
+        this.errors.push('Departure and Arrival stations cannot be the same!');
+        return;
+      }
+
+      this.form.time = moment(String(this.inputTime)).format('2015-MM-DD');
+
+      axios
+      .post('http://127.0.0.1:5000/', this.form)
+      .then(response => (this.result = response))
+
+      e.preventDefault();
+    }
+  } 
 }
 </script>
