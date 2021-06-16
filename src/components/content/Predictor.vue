@@ -41,13 +41,7 @@
 
       <!-- Results Content -->
       <div class="mt-5 mb-10 p-2 text-xl">
-        <label v-if="result">The model predicted that the delay will be in the following category: {{result.data}}.</label>
-        <p class="mt-5">Our predictions consist of three types.</p>
-        <ul class="pl-5">
-          <li>0 - there is no delay</li>
-          <li>1- there is a delay of less than 5 minutes</li>
-          <li>2 - there is a delay of more than 5 minutes</li>
-        </ul>
+        <label v-if="result">{{result}}</label>
       </div>
 
       <!-- Errors -->
@@ -118,7 +112,17 @@ export default {
 
       axios
       .post('http://127.0.0.1:5000/', this.form)
-      .then(response => (this.result = response))
+      .then(response =>{
+
+        if(response.data == 0)
+          this.result = "The model predicted that there will be no delay on this route.";
+
+        if(response.data == 1)
+          this.result = "The model predicted that there will a delay of less than 5 minutes on this route.";
+
+        if(response.data == 2)
+          this.result = "The model predicted that there will a delay of more than 5 minutes on this route.";
+      })
 
       e.preventDefault();
     }

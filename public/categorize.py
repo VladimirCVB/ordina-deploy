@@ -51,7 +51,7 @@ def index():
              (data['DATE'] == travelDate)]
         result = result.reset_index().drop('index', axis = 1)
  
-        prediction = knn.predict([[result['PlatformChanged'][2], result['Intercity'][2], result['FG'][2], result['FHX'][2], result['FHN'][2], result['FXX'][2], result['numberOfStops'][2]]])
+        prediction = knn.predict([[result['PlatformChanged'][0], result['Intercity'][0], result['FG'][0], result['FHX'][0], result['FHN'][0], result['FXX'][0], result['numberOfStops'][0]]])
         
         return str(prediction[0])
     except:
