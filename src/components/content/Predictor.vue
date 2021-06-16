@@ -114,14 +114,22 @@ export default {
       .post('http://127.0.0.1:5000/', this.form)
       .then(response =>{
 
-        if(response.data == 0)
+        if(response.data == 0){
           this.result = "The model predicted that there will be no delay on this route.";
+        }          
 
-        if(response.data == 1)
+        else if(response.data == 1){
           this.result = "The model predicted that there will a delay of less than 5 minutes on this route.";
+        }          
 
-        if(response.data == 2)
+        else if(response.data == 2){
           this.result = "The model predicted that there will a delay of more than 5 minutes on this route.";
+        }        
+
+        else{
+          this.result = "We are sorry! " + response.data;
+        }
+          
       })
 
       e.preventDefault();
